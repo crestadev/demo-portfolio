@@ -1,0 +1,64 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+*.log
+*.pot
+*.py[cod]
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+node_modules/
+
+# Django Migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.iml
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# Pytest
+.cache/
+
+# Env files
+.env
+.env.* 
+
+# npm / node
+package-lock.json
+yarn.lock
+
+# Other
+*.swp
