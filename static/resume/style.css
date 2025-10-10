@@ -1,17 +1,72 @@
+
 body {
-    font-family: Arial, sans-serif;
-    color: #222;
-  }
-  
-  h1, h3 {
-    color: #004080;
-  }
-  
-  section {
-    margin-bottom: 20px;
-  }
-  
-  hr {
-    margin: 20px 0;
-  }
-  
+  font-family: Arial, sans-serif;
+  color: #222;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h3 {
+  color: #004080;
+  margin-bottom: 10px;
+}
+
+h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+hr {
+  margin: 30px 0;
+  border-color: #ccc;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-center p {
+  margin: 5px 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #004080;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #004080;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #004080;
+  color: white;
+}
+
+.skill-bar {
+  background: #e0e0e0;
+  border-radius: 6px;
+  height: 12px;
+  overflow: hidden;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.skill-fill {
+  background: #007bff;
+  height: 12px;
+  border-radius: 6px;
+}

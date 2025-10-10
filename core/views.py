@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from weasyprint import HTML
 from django.template.loader import render_to_string
 from .models import Profile
+from django.conf import settings
+import os
 
 
 
@@ -42,8 +44,12 @@ def resume_pdf(request):
     profile = Profile.objects.first()
     context = {'profile': profile}
     html_string = render_to_string('core/resume.html', context)
-    html = HTML(string=html_string)
-    result = html.write_pdf()
+
+    css_path = os.path.join(settings.BASE_DIR, 'static/resume/style.css')
+
+    html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
+    result = html.write_pdf(stylesheets=[css_path])
+
     response = HttpResponse(result, content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="resume.pdf"'
     return response

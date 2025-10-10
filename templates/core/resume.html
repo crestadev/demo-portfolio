@@ -1,24 +1,33 @@
 {% extends 'base.html' %}
-{% block title %}Resume | My Portfolio{% endblock %}
+{% load static %}
+
+{% block title %}Resume | {{ profile.full_name }}{% endblock %}
+
 {% block content %}
-<div class="container" style="max-width:900px;">
-  <div class="text-center mb-4">
+<div class="container">
+
+  <!-- Profile Info -->
+  <div class="text-center mb-5">
     <h1>{{ profile.full_name }}</h1>
     <h3>{{ profile.title }}</h3>
     <p>{{ profile.bio }}</p>
-    <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
-    <p><strong>Location:</strong> {{ profile.location }}</p>
-    <a href="{% url 'core:resume_pdf' %}" class="btn btn-outline-primary btn-lg mt-3">Download PDF</a>
+    <p>
+      <strong>Email:</strong> {{ profile.email }} |
+      <strong>Phone:</strong> {{ profile.phone }} |
+      <strong>Location:</strong> {{ profile.location }}
+    </p>
+    <a href="{% url 'core:resume_pdf' %}" class="btn">Download PDF</a>
   </div>
 
   <hr>
 
+  <!-- Experience Section -->
   <section>
     <h3>Experience</h3>
     {% for exp in profile.experiences.all %}
       <div class="mb-3">
         <h5>{{ exp.position }} — {{ exp.company }}</h5>
-        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
+        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:"Present" }}</em></p>
         <p>{{ exp.description }}</p>
       </div>
     {% empty %}
@@ -28,6 +37,7 @@
 
   <hr>
 
+  <!-- Education Section -->
   <section>
     <h3>Education</h3>
     {% for edu in profile.education.all %}
@@ -43,18 +53,23 @@
 
   <hr>
 
+  <!-- Skills Section -->
   <section>
     <h3>Skills</h3>
     {% for skill in profile.skills.all %}
-      <div class="mb-2">
+      <div>
         <strong>{{ skill.name }}</strong> - {{ skill.level }}%
-        <div style="background:#e0e0e0; height:10px; border-radius:4px;">
-          <div style="background:#007bff; width:{{ skill.level }}%; height:10px; border-radius:4px;"></div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width: {{ skill.level }}%;"></div>
         </div>
       </div>
     {% empty %}
       <p>No skills added yet.</p>
     {% endfor %}
   </section>
+
 </div>
+
+<!-- Link external CSS for PDF & browser -->
+<link rel="stylesheet" href="{% static 'resume/style.css' %}">
 {% endblock %}
