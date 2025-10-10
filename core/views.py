@@ -4,10 +4,9 @@ from django.contrib import messages
 from .forms import ContactForm
 from django.http import HttpResponse
 from weasyprint import HTML
-import tempfile
+from django.template.loader import render_to_string
 from .models import Profile
 
-from django.template.loader import render_to_string
 
 
 def home(request):
@@ -36,17 +35,12 @@ def contact(request):
     return render(request, 'core/contact.html', {'form': form})
 
 def resume(request):
-    return render(request, 'core/resume.html')
-
+    profile = Profile.objects.first()
+    return render(request, 'core/resume.html', {'profile': profile})
 
 def resume_pdf(request):
-    profile = Profile.objects.first() 
-
-    context = {
-        'profile': profile,
-        'skills': ['Python', 'Django', 'HTML', 'CSS', 'JavaScript'],
-    }
-
+    profile = Profile.objects.first()
+    context = {'profile': profile}
     html_string = render_to_string('core/resume.html', context)
     html = HTML(string=html_string)
     result = html.write_pdf()
