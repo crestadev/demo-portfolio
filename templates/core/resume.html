@@ -1,45 +1,60 @@
 {% extends 'base.html' %}
 {% block title %}Resume | My Portfolio{% endblock %}
-
 {% block content %}
 <div class="container" style="max-width:900px;">
   <div class="text-center mb-4">
-    <h1>My Resume</h1>
-    <a href="{% url 'core:resume_pdf' %}" class="btn btn-outline-primary btn-lg">Download PDF</a>
+    <h1>{{ profile.full_name }}</h1>
+    <h3>{{ profile.title }}</h3>
+    <p>{{ profile.bio }}</p>
+    <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Location:</strong> {{ profile.location }}</p>
+    <a href="{% url 'core:resume_pdf' %}" class="btn btn-outline-primary btn-lg mt-3">Download PDF</a>
   </div>
-
-  <section>
-    <h3>Profile</h3>
-    <p>Full-stack developer with experience in Django, JavaScript, and modern web technologies.</p>
-  </section>
 
   <hr>
 
   <section>
     <h3>Experience</h3>
-    <ul>
-      <li><strong>Senior Developer</strong> — XYZ Company (2021 – Present)<br>Lead backend & frontend projects with Django & React.</li>
-      <li><strong>Software Engineer</strong> — ABC Tech (2019 – 2021)<br>Built REST APIs, improved performance, mentored juniors.</li>
-    </ul>
+    {% for exp in profile.experiences.all %}
+      <div class="mb-3">
+        <h5>{{ exp.position }} — {{ exp.company }}</h5>
+        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
+        <p>{{ exp.description }}</p>
+      </div>
+    {% empty %}
+      <p>No experiences added yet.</p>
+    {% endfor %}
   </section>
 
   <hr>
 
   <section>
     <h3>Education</h3>
-    <p>BSc in Computer Science — University of Somewhere (2015 – 2019)</p>
+    {% for edu in profile.education.all %}
+      <div class="mb-3">
+        <h5>{{ edu.degree }}</h5>
+        <p><em>{{ edu.institution }} ({{ edu.year }})</em></p>
+        <p>{{ edu.description }}</p>
+      </div>
+    {% empty %}
+      <p>No education records yet.</p>
+    {% endfor %}
   </section>
 
   <hr>
 
   <section>
     <h3>Skills</h3>
-    <ul>
-      <li>Python / Django</li>
-      <li>JavaScript / React</li>
-      <li>HTML, CSS (Bootstrap)</li>
-      <li>PostgreSQL, Docker, Git</li>
-    </ul>
+    {% for skill in profile.skills.all %}
+      <div class="mb-2">
+        <strong>{{ skill.name }}</strong> - {{ skill.level }}%
+        <div style="background:#e0e0e0; height:10px; border-radius:4px;">
+          <div style="background:#007bff; width:{{ skill.level }}%; height:10px; border-radius:4px;"></div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No skills added yet.</p>
+    {% endfor %}
   </section>
 </div>
 {% endblock %}
