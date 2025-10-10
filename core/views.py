@@ -5,6 +5,8 @@ from .forms import ContactForm
 from django.http import HttpResponse
 from weasyprint import HTML
 import tempfile
+from .models import Profile
+
 from django.template.loader import render_to_string
 
 
@@ -36,9 +38,16 @@ def contact(request):
 def resume(request):
     return render(request, 'core/resume.html')
 
+
 def resume_pdf(request):
-    """Generate PDF version of the resume page."""
-    html_string = render_to_string('core/resume.html')
+    profile = Profile.objects.first() 
+
+    context = {
+        'profile': profile,
+        'skills': ['Python', 'Django', 'HTML', 'CSS', 'JavaScript'],
+    }
+
+    html_string = render_to_string('core/resume.html', context)
     html = HTML(string=html_string)
     result = html.write_pdf()
     response = HttpResponse(result, content_type='application/pdf')

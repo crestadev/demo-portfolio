@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
+from django.db import models
 
 class Profile(models.Model):
     full_name = models.CharField(max_length=100)
@@ -13,6 +14,48 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class Skill(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='skills')
+    name = models.CharField(max_length=100)
+    level = models.PositiveIntegerField(default=80, help_text="Skill proficiency percentage (0–100)")
+
+    class Meta:
+        ordering = ['-level']
+
+    def __str__(self):
+        return f"{self.name} ({self.level}%)"
+
+
+class Experience(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='experiences')
+    position = models.CharField(max_length=150)
+    company = models.CharField(max_length=150)
+    start_year = models.CharField(max_length=10)
+    end_year = models.CharField(max_length=10, blank=True)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-start_year']
+
+    def __str__(self):
+        return f"{self.position} at {self.company}"
+
+
+class Education(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='education')
+    degree = models.CharField(max_length=150)
+    institution = models.CharField(max_length=150)
+    year = models.CharField(max_length=10)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-year']
+
+    def __str__(self):
+        return f"{self.degree} - {self.institution}"
+
 
 class Testimonial(models.Model):
     client_name = models.CharField(max_length=100)
