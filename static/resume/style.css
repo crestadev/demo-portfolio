@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #222;
+  }
+  
+  h1, h3 {
+    color: #004080;
+  }
+  
+  section {
+    margin-bottom: 20px;
+  }
+  
+  hr {
+    margin: 20px 0;
+  }
+  
