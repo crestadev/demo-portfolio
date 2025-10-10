@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import Testimonial, BlogPost, ContactMessage
 
+from .models import Profile
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'title', 'email', 'location')
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
