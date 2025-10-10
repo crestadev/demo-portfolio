@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.contrib import messages
 from .forms import ContactForm
+from django.http import HttpResponse
+from weasyprint import HTML
+import tempfile
+from django.template.loader import render_to_string
+
 
 def home(request):
     return render(request, 'core/home.html')
@@ -27,3 +32,15 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'core/contact.html', {'form': form})
+
+def resume(request):
+    return render(request, 'core/resume.html')
+
+def resume_pdf(request):
+    """Generate PDF version of the resume page."""
+    html_string = render_to_string('core/resume.html')
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    response = HttpResponse(result, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="resume.pdf"'
+    return response
