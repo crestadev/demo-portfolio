@@ -7,4 +7,6 @@ from portfolio_site import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls', namespace='core')),
+    path('projects/', include('projects.urls', namespace='projects')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
