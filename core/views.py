@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from .models import Profile
 from django.conf import settings
 import os
+from .models import Testimonial
 
 
 
@@ -53,3 +54,9 @@ def resume_pdf(request):
     response = HttpResponse(result, content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="resume.pdf"'
     return response
+
+
+def testimonials(request):
+    testimonials = Testimonial.objects.all()
+    return render(request, 'core/testimonials.html', {'testimonials': testimonials})
+
