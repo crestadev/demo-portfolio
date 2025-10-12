@@ -4,72 +4,65 @@
 {% block title %}Resume | {{ profile.full_name }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<link rel="stylesheet" href="{% static 'resume/style.css' %}">
 
-  <!-- Profile Info -->
-  <div class="text-center mb-5">
-    <h1>{{ profile.full_name }}</h1>
-    <h3>{{ profile.title }}</h3>
-    <p>{{ profile.bio }}</p>
-    <p>
-      <strong>Email:</strong> {{ profile.email }} |
-      <strong>Phone:</strong> {{ profile.phone }} |
-      <strong>Location:</strong> {{ profile.location }}
-    </p>
-    <a href="{% url 'core:resume_pdf' %}" class="btn">Download PDF</a>
+<div class="resume-container">
+  <div class="resume-left">
+    <div class="profile-info text-center">
+      <h1>{{ profile.full_name }}</h1>
+      <h3>{{ profile.title }}</h3>
+      <p>{{ profile.bio }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>Phone:</strong> {{ profile.phone }}</p>
+      <p><strong>Location:</strong> {{ profile.location }}</p>
+      {% if profile.resume_file %}
+      <a href="{{ profile.resume_file.url }}" class="btn btn-outline-primary mt-3">Download PDF</a>
+      {% else %}
+      <a href="{% url 'core:resume_pdf' %}" class="btn btn-outline-primary mt-3">Download PDF</a>
+      {% endif %}
+    </div>
   </div>
 
-  <hr>
-
-  <!-- Experience Section -->
-  <section>
-    <h3>Experience</h3>
-    {% for exp in profile.experiences.all %}
-      <div class="mb-3">
+  <div class="resume-right">
+    <section>
+      <h3>Experience</h3>
+      {% for exp in profile.experiences.all %}
+      <div class="resume-item">
         <h5>{{ exp.position }} — {{ exp.company }}</h5>
-        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:"Present" }}</em></p>
+        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
         <p>{{ exp.description }}</p>
       </div>
-    {% empty %}
+      {% empty %}
       <p>No experiences added yet.</p>
-    {% endfor %}
-  </section>
+      {% endfor %}
+    </section>
 
-  <hr>
-
-  <!-- Education Section -->
-  <section>
-    <h3>Education</h3>
-    {% for edu in profile.education.all %}
-      <div class="mb-3">
+    <section>
+      <h3>Education</h3>
+      {% for edu in profile.education.all %}
+      <div class="resume-item">
         <h5>{{ edu.degree }}</h5>
         <p><em>{{ edu.institution }} ({{ edu.year }})</em></p>
         <p>{{ edu.description }}</p>
       </div>
-    {% empty %}
+      {% empty %}
       <p>No education records yet.</p>
-    {% endfor %}
-  </section>
+      {% endfor %}
+    </section>
 
-  <hr>
-
-  <!-- Skills Section -->
-  <section>
-    <h3>Skills</h3>
-    {% for skill in profile.skills.all %}
-      <div>
-        <strong>{{ skill.name }}</strong> - {{ skill.level }}%
+    <section>
+      <h3>Skills</h3>
+      {% for skill in profile.skills.all %}
+      <div class="skill">
+        <strong>{{ skill.name }}</strong>
         <div class="skill-bar">
-          <div class="skill-fill" style="width: {{ skill.level }}%;"></div>
+          <div class="skill-level" style="width:{{ skill.level }}%;"></div>
         </div>
       </div>
-    {% empty %}
+      {% empty %}
       <p>No skills added yet.</p>
-    {% endfor %}
-  </section>
-
+      {% endfor %}
+    </section>
+  </div>
 </div>
-
-<!-- Link external CSS for PDF & browser -->
-<link rel="stylesheet" href="{% static 'resume/style.css' %}">
 {% endblock %}
