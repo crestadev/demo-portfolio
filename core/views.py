@@ -5,10 +5,9 @@ from .forms import ContactForm
 from django.http import HttpResponse
 from weasyprint import HTML
 from django.template.loader import render_to_string
-from .models import Profile
+from .models import Profile,Testimonial
 from django.conf import settings
 import os
-from .models import Testimonial
 
 
 
@@ -60,3 +59,11 @@ def testimonials(request):
     testimonials = Testimonial.objects.all()
     return render(request, 'core/testimonials.html', {'testimonials': testimonials})
 
+
+def home(request):
+    profile = Profile.objects.first()
+    testimonials = Testimonial.objects.all()[:3] 
+    return render(request, 'core/home.html', {
+        'profile': profile,
+        'testimonials': testimonials,
+    })
