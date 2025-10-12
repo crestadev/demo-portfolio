@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}  
+
 {% block title %}{{ post.title }} | Blog{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/style.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container py-5" style="max-width: 800px;">
   <h1>{{ post.title }}</h1>
-  <p class="text-muted">By {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
-  {% if post.cover_image %}
-  <img src="{{ post.cover_image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
-  {% endif %}
-  <p>{{ post.content|linebreaks }}</p>
+  <p class="text-muted">{{ post.created_at|date:"M d, Y" }}</p>
+
+  <div class="markdown-body">
+    {{ post.content_html|safe }}
+  </div>
+
   <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-secondary mt-4">← Back to Blog</a>
 </div>
 {% endblock %}
