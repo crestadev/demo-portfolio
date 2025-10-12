@@ -6,4 +6,34 @@
     <p class="lead">I am a Full-Stack Developer creating modern, responsive websites.</p>
     <a href="{% url 'core:about' %}" class="btn btn-primary btn-lg mt-3">Learn More About Me</a>
 </div>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light" id="testimonials">
+    <div class="container text-center">
+      <h2 class="mb-5">What Clients Say</h2>
+  
+      <div class="row justify-content-center">
+        {% for t in testimonials %}
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            {% if t.photo %}
+            <img src="{{ t.photo.url }}" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="{{ t.client_name }}">
+            {% endif %}
+            <blockquote class="blockquote">
+              <p class="mb-3">“{{ t.content|truncatechars:120 }}”</p>
+            </blockquote>
+            <footer class="blockquote-footer">
+              {{ t.client_name }} <cite title="Source Title">{{ t.role }}</cite>
+            </footer>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">No testimonials yet. Add some via the admin panel.</p>
+        {% endfor %}
+      </div>
+  
+      <a href="{% url 'core:testimonials' %}" class="btn btn-outline-primary mt-4">View All Testimonials</a>
+    </div>
+  </section>
+  
 {% endblock %}
