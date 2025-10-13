@@ -115,3 +115,57 @@ hr {
 .download-btn:hover {
   background: #002a66;
 }
+
+/* ---------------------------- */
+/* Responsive Styles            */
+/* ---------------------------- */
+@media (max-width: 768px) {
+  .resume-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .header-text h3 {
+    font-size: 1rem;
+  }
+
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .social-links a {
+    display: inline-block;
+    margin: 5px 5px 0 0;
+  }
+
+  .download-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .resume-container {
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .header-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-text h3 {
+    font-size: 0.95rem;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+  }
+}
