@@ -1,63 +1,66 @@
-/* Resume container layout */
 .resume-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem auto;
   max-width: 900px;
-  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
   color: #222;
 }
 
-/* Left column: personal info */
-.resume-left {
-  flex: 1 1 250px;
-  padding: 1rem;
-  background: #f7f7f7;
-  border-radius: 8px;
-  margin-right: 1rem;
+.resume-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.profile-info h1 {
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+h1 {
   color: #004080;
-  margin-bottom: 0.3rem;
-}
-.profile-info h3 {
-  color: #007bff;
-  margin-bottom: 0.5rem;
-}
-.profile-info p {
-  margin-bottom: 0.3rem;
+  font-size: 2rem;
+  margin-bottom: 5px;
 }
 
-/* Right column: main resume content */
-.resume-right {
-  flex: 2 1 600px;
-  padding: 1rem;
-}
-
-.resume-right h3 {
+h2 {
   color: #004080;
-  margin-top: 1.5rem;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 0.2rem;
+  margin-top: 30px;
+  border-bottom: 2px solid #004080;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
-.resume-item {
-  margin-bottom: 1rem;
+h4 {
+  margin-bottom: 5px;
 }
 
-.skill {
-  margin-bottom: 0.5rem;
+.download-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #004080;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.download-btn:hover {
+  background: #002a66;
 }
 
 .skill-bar {
   background: #e0e0e0;
   height: 10px;
   border-radius: 4px;
+  margin-top: 3px;
 }
 
 .skill-level {
-  background: #007bff;
+  background: #004080;
   height: 10px;
   border-radius: 4px;
 }

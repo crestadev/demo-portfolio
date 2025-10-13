@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 
 from django.db import models
+# core/models.py
 
 class Profile(models.Model):
     full_name = models.CharField(max_length=100)
@@ -10,10 +11,16 @@ class Profile(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True)
     location = models.CharField(max_length=100, blank=True)
-    resume_file = models.FileField(upload_to='resumes/', blank=True, null=True)
+    photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    
+    tagline = models.CharField(max_length=250, blank=True, help_text="Short professional tagline")
+    linkedin = models.URLField(blank=True)
+    github = models.URLField(blank=True)
+    website = models.URLField(blank=True)
 
     def __str__(self):
         return self.full_name
+
 
 
 class Skill(models.Model):

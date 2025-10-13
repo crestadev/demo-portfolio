@@ -1,39 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home | My Portfolio{% endblock %}
-{% block content %}
-<div class="text-center">
-    <h1 class="display-4">Welcome to My Portfolio</h1>
-    <p class="lead">I am a Full-Stack Developer creating modern, responsive websites.</p>
-    <a href="{% url 'core:about' %}" class="btn btn-primary btn-lg mt-3">Learn More About Me</a>
-</div>
 
-<!-- Testimonials Section -->
-<section class="py-5 bg-light" id="testimonials">
-    <div class="container text-center">
-      <h2 class="mb-5">What Clients Say</h2>
-  
-      <div class="row justify-content-center">
-        {% for t in testimonials %}
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm p-4 h-100">
-            {% if t.photo %}
-            <img src="{{ t.photo.url }}" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="{{ t.client_name }}">
-            {% endif %}
-            <blockquote class="blockquote">
-              <p class="mb-3">“{{ t.content|truncatechars:120 }}”</p>
-            </blockquote>
-            <footer class="blockquote-footer">
-              {{ t.client_name }} <cite title="Source Title">{{ t.role }}</cite>
-            </footer>
+{% block content %}
+<link rel="stylesheet" href="{% static 'home/style.css' %}">
+
+<!-- HERO SECTION -->
+<section class="hero-section text-center text-light d-flex align-items-center justify-content-center">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1 class="display-4 fw-bold">Hi, I'm {{ profile.full_name|default:"Your Name" }}</h1>
+    <h3 class="mb-3">{{ profile.title|default:"Full-Stack Developer" }}</h3>
+    <p class="lead mb-4">
+      {{ profile.bio|truncatechars:150|default:"I design and build clean, efficient, and scalable web applications using modern technologies." }}
+    </p>
+    <div class="hero-buttons">
+      <a href="{% url 'core:about' %}" class="btn btn-primary btn-lg me-3">About Me</a>
+      <a href="{% url 'core:resume' %}" class="btn btn-outline-light btn-lg">View Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS HIGHLIGHT -->
+<section class="py-5 text-center">
+  <div class="container">
+    <h2 class="mb-5 fw-bold">Core Skills</h2>
+    <div class="row justify-content-center">
+      {% for skill in profile.skills.all|slice:":6" %}
+      <div class="col-md-4 mb-4">
+        <div class="skill-card shadow-sm">
+          <h5>{{ skill.name }}</h5>
+          <div class="progress">
+            <div class="progress-bar" style="width: {{ skill.level }}%;">
+              {{ skill.level }}%
+            </div>
           </div>
         </div>
-        {% empty %}
-        <p class="text-muted">No testimonials yet. Add some via the admin panel.</p>
-        {% endfor %}
       </div>
-  
-      <a href="{% url 'core:testimonials' %}" class="btn btn-outline-primary mt-4">View All Testimonials</a>
+      {% empty %}
+      <p>No skills added yet. Add some via the admin panel.</p>
+      {% endfor %}
     </div>
-  </section>
-  
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-5 bg-light" id="testimonials">
+  <div class="container text-center">
+    <h2 class="mb-5 fw-bold">What Clients Say</h2>
+    <div class="row justify-content-center">
+      {% for t in testimonials|slice:":3" %}
+      <div class="col-md-4 mb-4">
+        <div class="testimonial-card shadow-sm p-4 h-100">
+          {% if t.photo %}
+          <img src="{{ t.photo.url }}" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="{{ t.client_name }}">
+          {% endif %}
+          <blockquote class="blockquote">
+            <p class="mb-3">“{{ t.content|truncatechars:120 }}”</p>
+          </blockquote>
+          <footer class="blockquote-footer">
+            {{ t.client_name }} <cite>{{ t.role }}</cite>
+          </footer>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted">No testimonials yet. Add some via the admin panel.</p>
+      {% endfor %}
+    </div>
+    <a href="{% url 'core:testimonials' %}" class="btn btn-outline-primary mt-4">View All Testimonials</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="contact-cta text-center py-5 text-light">
+  <div class="container">
+    <h2>Let’s work together!</h2>
+    <p class="lead mb-4">Looking for a developer to bring your ideas to life?</p>
+    <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Contact Me</a>
+  </div>
+</section>
 {% endblock %}

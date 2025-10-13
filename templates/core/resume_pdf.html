@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ profile.full_name }} - Resume</title>
+  <link rel="stylesheet" href="{% static 'resume/pdf_style.css' %}">
+</head>
+<body>
+  <div class="header">
+    <h1>{{ profile.full_name }}</h1>
+    <h3>{{ profile.title }}</h3>
+    <p>{{ profile.bio }}</p>
+    <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Location:</strong> {{ profile.location }}</p>
+  </div>
+
+  <hr>
+
+  <section>
+    <h2>Experience</h2>
+    {% for exp in profile.experiences.all %}
+      <h4>{{ exp.position }} — {{ exp.company }}</h4>
+      <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
+      <p>{{ exp.description }}</p>
+    {% endfor %}
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Education</h2>
+    {% for edu in profile.education.all %}
+      <h4>{{ edu.degree }}</h4>
+      <p><em>{{ edu.institution }} ({{ edu.year }})</em></p>
+      <p>{{ edu.description }}</p>
+    {% endfor %}
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Skills</h2>
+    {% for skill in profile.skills.all %}
+      <p>{{ skill.name }} — {{ skill.level }}%</p>
+      <div class="bar">
+        <div class="fill" style="width:{{ skill.level }}%;"></div>
+      </div>
+    {% endfor %}
+  </section>
+</body>
+</html>

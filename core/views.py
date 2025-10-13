@@ -45,17 +45,16 @@ def resume(request):
 def resume_pdf(request):
     profile = Profile.objects.first()
     context = {'profile': profile}
-    html_string = render_to_string('core/resume.html', context)
 
-    css_path = os.path.join(settings.BASE_DIR, 'static/resume/style.css')
+    html_string = render_to_string('core/resume_pdf.html', context)
+    css_path = os.path.join(settings.BASE_DIR, 'static/resume/pdf_style.css')
 
     html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
-    result = html.write_pdf(stylesheets=[css_path])
+    pdf = html.write_pdf(stylesheets=[css_path])
 
-    response = HttpResponse(result, content_type='application/pdf')
+    response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="resume.pdf"'
     return response
-
 
 def testimonials(request):
     testimonials = Testimonial.objects.all()
