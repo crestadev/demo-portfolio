@@ -15,7 +15,9 @@ def home(request):
     return render(request, 'core/home.html')
 
 def about(request):
-    return render(request, 'core/about.html')
+    profile = Profile.objects.first()
+    return render(request, 'core/about.html', {'profile': profile})
+
 
 def contact(request):
     if request.method == 'POST':

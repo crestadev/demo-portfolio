@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About | My Portfolio{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'about/style.css' %}">
+
+<div class="about-container">
+  <div class="about-header">
+    <img src="{% static 'images/profile.png' %}" alt="{{ profile.full_name }}" class="profile-pic">
+    <div>
+      <h1>{{ profile.full_name }}</h1>
+      <h3>{{ profile.title }}</h3>
+      <p>{{ profile.location }}</p>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <h2>About Me</h2>
+    <p>{{ profile.bio }}</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Skills & Strengths</h2>
+    <ul>
+      {% for skill in profile.skills.all %}
+        <li><strong>{{ skill.name }}</strong> – {{ skill.level }}%</li>
+      {% empty %}
+        <li>No skills added yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <h2>Experience Snapshot</h2>
+    {% for exp in profile.experiences.all %}
+      <div class="experience-card">
+        <h4>{{ exp.position }}</h4>
+        <p><em>{{ exp.company }}</em> ({{ exp.start_year }} - {{ exp.end_year|default:"Present" }})</p>
+        <p>{{ exp.description|truncatechars:150 }}</p>
+      </div>
+    {% empty %}
+      <p>No experiences yet.</p>
+    {% endfor %}
+  </div>
+
+  <div class="about-section contact-link">
+    <p>Want to collaborate or hire me?</p>
+    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary">Contact Me</a>
+  </div>
+</div>
+{% endblock %}
