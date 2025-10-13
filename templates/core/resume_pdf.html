@@ -8,11 +8,26 @@
 </head>
 <body>
   <div class="header">
-    <h1>{{ profile.full_name }}</h1>
-    <h3>{{ profile.title }}</h3>
-    <p>{{ profile.bio }}</p>
-    <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
-    <p><strong>Location:</strong> {{ profile.location }}</p>
+    <div class="header-left">
+      {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}" class="profile-photo">
+      {% endif %}
+    </div>
+    <div class="header-right">
+      <h1>{{ profile.full_name }}</h1>
+      <h3>{{ profile.title }}</h3>
+      {% if profile.tagline %}
+        <p class="tagline">{{ profile.tagline }}</p>
+      {% endif %}
+      <p>{{ profile.bio }}</p>
+      <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
+      <p><strong>Location:</strong> {{ profile.location }}</p>
+      <p>
+        {% if profile.linkedin %}LinkedIn: {{ profile.linkedin }}{% endif %}
+        {% if profile.github %} | GitHub: {{ profile.github }}{% endif %}
+        {% if profile.website %} | Website: {{ profile.website }}{% endif %}
+      </p>
+    </div>
   </div>
 
   <hr>
@@ -20,9 +35,13 @@
   <section>
     <h2>Experience</h2>
     {% for exp in profile.experiences.all %}
-      <h4>{{ exp.position }} — {{ exp.company }}</h4>
-      <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
-      <p>{{ exp.description }}</p>
+      <div class="item">
+        <h4>{{ exp.position }} — {{ exp.company }}</h4>
+        <p><em>{{ exp.start_year }} - {{ exp.end_year|default:'Present' }}</em></p>
+        <p>{{ exp.description }}</p>
+      </div>
+    {% empty %}
+      <p>No experiences yet.</p>
     {% endfor %}
   </section>
 
@@ -31,9 +50,13 @@
   <section>
     <h2>Education</h2>
     {% for edu in profile.education.all %}
-      <h4>{{ edu.degree }}</h4>
-      <p><em>{{ edu.institution }} ({{ edu.year }})</em></p>
-      <p>{{ edu.description }}</p>
+      <div class="item">
+        <h4>{{ edu.degree }}</h4>
+        <p><em>{{ edu.institution }} ({{ edu.year }})</em></p>
+        <p>{{ edu.description }}</p>
+      </div>
+    {% empty %}
+      <p>No education yet.</p>
     {% endfor %}
   </section>
 
@@ -42,10 +65,14 @@
   <section>
     <h2>Skills</h2>
     {% for skill in profile.skills.all %}
-      <p>{{ skill.name }} — {{ skill.level }}%</p>
-      <div class="bar">
-        <div class="fill" style="width:{{ skill.level }}%;"></div>
+      <div class="skill">
+        <span>{{ skill.name }}</span>
+        <div class="skill-bar">
+          <div class="skill-level" style="width:{{ skill.level }}%;"></div>
+        </div>
       </div>
+    {% empty %}
+      <p>No skills yet.</p>
     {% endfor %}
   </section>
 </body>

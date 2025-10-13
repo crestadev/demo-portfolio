@@ -9,12 +9,22 @@
     {% if profile.photo %}
       <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}" class="profile-photo">
     {% endif %}
-    <div>
+    <div class="header-text">
       <h1>{{ profile.full_name }}</h1>
       <h3>{{ profile.title }}</h3>
+      {% if profile.tagline %}
+        <p class="tagline">{{ profile.tagline }}</p>
+      {% endif %}
       <p>{{ profile.bio }}</p>
       <p><strong>Email:</strong> {{ profile.email }} | <strong>Phone:</strong> {{ profile.phone }}</p>
       <p><strong>Location:</strong> {{ profile.location }}</p>
+
+      <div class="social-links">
+        {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank">LinkedIn</a>{% endif %}
+        {% if profile.github %}<a href="{{ profile.github }}" target="_blank">GitHub</a>{% endif %}
+        {% if profile.website %}<a href="{{ profile.website }}" target="_blank">Website</a>{% endif %}
+      </div>
+
       <a href="{% url 'core:resume_pdf' %}" class="download-btn">Download PDF</a>
     </div>
   </div>
