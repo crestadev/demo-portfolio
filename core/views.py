@@ -38,7 +38,7 @@ def contact(request):
             contact_message = form.save()
 
             # Prepare recipients
-            recipients = ['admin@example.com']
+            recipients = [settings.CONTACT_RECEIVER_EMAIL]
             if contact_message.cc_email:
                 recipients.append(contact_message.cc_email)
 

@@ -1,8 +1,78 @@
-@media (max-width: 480px) {
-    .container {
+/* Container adjustments */
+.contact-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: "Segoe UI", sans-serif;
+    color: #222;
+    background: #fdfdfd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  /* Headline */
+  .contact-container h1 {
+    color: #004080;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Form fields */
+  .contact-container .form-control {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .contact-container .form-control:focus {
+    border-color: #004080;
+    box-shadow: 0 0 5px rgba(0,64,128,0.3);
+  }
+  
+  /* Labels */
+  .contact-container label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  /* Error messages */
+  .contact-container .text-danger {
+    font-size: 0.875rem;
+  }
+  
+  /* Button */
+  .contact-container .btn-primary {
+    background: #004080;
+    border-color: #004080;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 6px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .contact-container .btn-primary:hover {
+    background: #002a66;
+    transform: translateY(-1px);
+  }
+  
+  /* Alerts */
+  .contact-container .alert {
+    border-radius: 6px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    .contact-container {
       padding: 15px;
     }
-    .btn-lg {
+  
+    .contact-container .btn-primary {
       width: 100%;
     }
   }
+  

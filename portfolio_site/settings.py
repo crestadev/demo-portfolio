@@ -123,3 +123,8 @@ INTERNAL_IPS = ["127.0.0.1"]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='webmaster@localhost')
+CONTACT_RECEIVER_EMAIL = env('CONTACT_RECEIVER_EMAIL', default='admin@example.com')
+
