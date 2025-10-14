@@ -3,5 +3,6 @@ from .models import BlogPost
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'created_at')
+    list_display = ('title', 'created_at', 'updated_at')
     prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title', 'summary')
