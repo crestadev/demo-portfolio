@@ -25,31 +25,40 @@ from django.contrib import messages
 from .forms import ContactForm
 from django.http import HttpResponse
 
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.contrib import messages
+from .forms import ContactForm
+
 def contact(request):
     form = ContactForm(request.POST or None)
-    
+
     if request.method == 'POST':
         if form.is_valid():
             contact_message = form.save()
-            
+
+            # Prepare recipients
+            recipients = ['admin@example.com']
+            if contact_message.cc_email:
+                recipients.append(contact_message.cc_email)
+
             try:
                 send_mail(
                     subject=f"New Contact: {contact_message.subject}",
-                    message=f"Message from {contact_message.name} <{contact_message.email}>:\n\n{contact_message.message}",
-                    from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
-                    recipient_list=['admin@example.com'],
-                    fail_silently=False,  # Do not fail silently
+                    message=f"Message from {contact_message.name} <{contact_message.email}>\nPhone: {contact_message.phone}\n\n{contact_message.message}",
+                    from_email=None,  # uses DEFAULT_FROM_EMAIL
+                    recipient_list=recipients,
+                    fail_silently=False,
                 )
                 messages.success(request, 'Your message has been sent successfully!')
             except BadHeaderError:
                 messages.error(request, 'Invalid header found. Message not sent.')
             except Exception as e:
                 messages.error(request, f'Error sending email: {e}')
-            
+
             return redirect('core:contact')
 
     return render(request, 'core/contact.html', {'form': form})
-
 
 def resume(request):
     profile = Profile.objects.first()
