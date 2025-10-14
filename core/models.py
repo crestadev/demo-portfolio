@@ -73,13 +73,17 @@ class Testimonial(models.Model):
     def __str__(self):
         return f"{self.client_name} - {self.role}"
     
+from django.db import models
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)  
     subject = models.CharField(max_length=150)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    cc_email = models.EmailField(blank=True, null=True, help_text="Optional CC email")  # optional CC
 
     class Meta:
         ordering = ['-created_at']

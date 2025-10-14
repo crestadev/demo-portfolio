@@ -1,0 +1,8 @@
+@media (max-width: 480px) {
+    .container {
+      padding: 15px;
+    }
+    .btn-lg {
+      width: 100%;
+    }
+  }
