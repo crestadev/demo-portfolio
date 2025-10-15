@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
-from .forms import ContactForm
 from django.http import HttpResponse
-from weasyprint import HTML
 from django.template.loader import render_to_string
-from .models import Profile,Testimonial
 from django.conf import settings
+
+from weasyprint import HTML
 import os
+
+from .forms import ContactForm
+from .models import Profile, Testimonial
+
 
 
 
@@ -19,16 +22,7 @@ def about(request):
     return render(request, 'core/about.html', {'profile': profile})
 
 
-from django.shortcuts import render, redirect
-from django.core.mail import send_mail, BadHeaderError
-from django.contrib import messages
-from .forms import ContactForm
-from django.http import HttpResponse
 
-from django.shortcuts import render, redirect
-from django.core.mail import send_mail, BadHeaderError
-from django.contrib import messages
-from .forms import ContactForm
 
 def contact(request):
     form = ContactForm(request.POST or None)

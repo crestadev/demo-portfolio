@@ -61,6 +61,7 @@
     border-radius: 6px;
   }
   
+  
   /* Small devices adjustments */
   @media (max-width: 576px) {
     .project-thumb img {

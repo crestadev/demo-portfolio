@@ -4,7 +4,6 @@ from .models import Project, ProjectImage
 class ProjectImageInline(admin.TabularInline):
     model = ProjectImage
     extra = 1
-    readonly_fields = ()
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
