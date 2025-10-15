@@ -5,49 +5,143 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'about/style.css' %}">
 
-<div class="about-container">
-  
-  <div class="about-header">
-    <img src="{% static 'images/profile.png' %}" alt="{{ profile.full_name }}" class="profile-pic">
-    <div>
-      <h1>{{ profile.full_name }}</h1>
-      <h3>{{ profile.title }}</h3>
-      <p><i class="bi bi-geo-alt"></i> {{ profile.location }}</p>
+<div class="container my-5">
+
+  <!-- Header -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-4 text-center">
+      {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}" class="rounded-circle img-fluid border border-primary" style="max-width: 200px;">
+      {% else %}
+        <img src="{% static 'images/default_profile.png' %}" alt="{{ profile.full_name }}" class="rounded-circle img-fluid border border-primary" style="max-width: 200px;">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h1 class="fw-bold">{{ profile.full_name }}</h1>
+      <h4 class="text-primary">{{ profile.title }}</h4>
+      {% if profile.tagline %}
+        <p class="fst-italic">{{ profile.tagline }}</p>
+      {% endif %}
+      <p>
+        {% if profile.phone %}<i class="bi bi-telephone-fill"></i> {{ profile.phone }} |{% endif %}
+        {% if profile.email %}<i class="bi bi-envelope-fill"></i> {{ profile.email }}{% endif %}
+      </p>
+      <p>{% if profile.location %}<i class="bi bi-geo-alt-fill"></i> {{ profile.location }}{% endif %}</p>
+      <div class="mt-2">
+        {% if profile.linkedin %}<a href="{{ profile.linkedin }}" class="btn btn-outline-primary btn-sm me-2" target="_blank">LinkedIn</a>{% endif %}
+        {% if profile.github %}<a href="{{ profile.github }}" class="btn btn-outline-dark btn-sm me-2" target="_blank">GitHub</a>{% endif %}
+        {% if profile.website %}<a href="{{ profile.website }}" class="btn btn-outline-success btn-sm" target="_blank">Website</a>{% endif %}
+      </div>
     </div>
   </div>
 
-  <div class="about-section">
-    <h2>About Me</h2>
-    <p>{{ profile.bio }}</p>
-  </div>
+  <!-- About Me -->
+  <section class="mb-5">
+    <h2 class="text-primary mb-3 border-start border-3 ps-2">About Me</h2>
+    <p>{{ profile.bio|linebreaks }}</p>
+  </section>
 
-  <div class="about-section">
-    <h2>Skills & Strengths</h2>
-    <ul>
+  <!-- Skills -->
+  <section class="mb-5">
+    <h2 class="text-primary mb-3 border-start border-3 ps-2">Skills</h2>
+    <div class="row">
       {% for skill in profile.skills.all %}
-        <li><strong>{{ skill.name }}</strong> — {{ skill.level }}%</li>
+        <div class="col-md-6 mb-3">
+          <h6 class="mb-1">{{ skill.name }} <span class="float-end">{{ skill.level }}%</span></h6>
+          <div class="progress">
+            <div class="progress-bar bg-primary" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
       {% empty %}
-        <li>No skills added yet.</li>
+        <p>No skills added yet.</p>
       {% endfor %}
-    </ul>
-  </div>
+    </div>
+  </section>
 
-  <div class="about-section">
-    <h2>Experience Snapshot</h2>
-    {% for exp in profile.experiences.all %}
-      <div class="experience-card">
-        <h4>{{ exp.position }}</h4>
-        <p><em>{{ exp.company }}</em> ({{ exp.start_year }} - {{ exp.end_year|default:"Present" }})</p>
-        <p>{{ exp.description|truncatechars:180 }}</p>
+  <!-- Experience -->
+  <section class="mb-5">
+    <h2 class="text-primary mb-3 border-start border-3 ps-2">Experience</h2>
+    <div class="row">
+      {% for exp in profile.experiences.all %}
+        <div class="col-md-6 mb-3">
+          <div class="card shadow-sm h-100 hover-shadow">
+            <div class="card-body">
+              <h5 class="card-title">{{ exp.position }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ exp.company }} • {{ exp.start_year }} - {{ exp.end_year|default:"Present" }}</h6>
+              <p>{{ exp.description|truncatechars:150 }}</p>
+              <button type="button" class="read-more-btn" data-bs-toggle="modal" data-bs-target="#expModal{{ exp.id }}">
+                Read more
+              </button>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="expModal{{ exp.id }}" tabindex="-1" aria-labelledby="expModalLabel{{ exp.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="expModalLabel{{ exp.id }}">{{ exp.position }} at {{ exp.company }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                {{ exp.description|linebreaks }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% empty %}
+        <p>No experiences yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+<!-- Education -->
+<section class="mb-5">
+  <h2 class="text-primary mb-3 border-start border-3 ps-2">Education</h2>
+  <div class="row">
+    {% for edu in profile.education.all %}
+      <div class="col-md-6 mb-3">
+        <div class="card shadow-sm h-100 hover-shadow">
+          <div class="card-body">
+            <h5 class="card-title">{{ edu.degree }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ edu.institution }} • {{ edu.year }}</h6>
+            <p>{{ edu.description|truncatechars:150 }}</p>
+            <button type="button" class="read-more-btn" data-bs-toggle="modal" data-bs-target="#eduModal{{ edu.id }}">
+              Read more
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- Modal for this education -->
+      <div class="modal fade" id="eduModal{{ edu.id }}" tabindex="-1" aria-labelledby="eduModalLabel{{ edu.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="eduModalLabel{{ edu.id }}">{{ edu.degree }} at {{ edu.institution }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {{ edu.description|linebreaks }}
+            </div>
+          </div>
+        </div>
+      </div>
+
     {% empty %}
-      <p>No experiences added yet.</p>
+      <p>No education records yet.</p>
     {% endfor %}
   </div>
+</section>
 
-  <div class="contact-link">
-    <p>Want to collaborate or hire me?</p>
-    <a href="{% url 'core:contact' %}" class="btn">Contact Me</a>
+
+  <!-- Contact CTA -->
+  <div class="text-center mb-5">
+    <a href="{% url 'core:contact' %}" class="btn btn-lg btn-primary">Contact Me</a>
   </div>
+
 </div>
 {% endblock %}
