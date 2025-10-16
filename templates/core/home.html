@@ -64,11 +64,12 @@
   <div class="projects-grid">
     {% for project in projects %}
     <div class="project-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
-      {% if project.featured_image %}
+      {% if project.image %}
       <div class="project-img-container">
-        <img src="{{ project.featured_image.url }}" alt="{{ project.title }}">
+        <img src="{{ project.image.url }}" alt="{{ project.title }}">
       </div>
       {% endif %}
+      
       <div class="project-content">
         <h4>{{ project.title }}</h4>
         <p>{{ project.summary|truncatechars:120 }}</p>

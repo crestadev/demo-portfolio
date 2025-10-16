@@ -106,3 +106,27 @@ body {
     font-weight:600;
   }
   
+
+  /* Glow Animation Keyframes */
+@keyframes glowPulse {
+    0% { text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff; }
+    50% { text-shadow: 0 0 15px #00bfff, 0 0 30px #00bfff; }
+    100% { text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff; }
+  }
+  
+  /* Navbar Links Glow */
+  .navbar-glass .nav-link:hover {
+    color: #00bfff;
+    animation: glowPulse 1.5s infinite alternate;
+  }
+  
+  /* Footer Social Icons Glow */
+  .footer-glass .footer-social a {
+    transition: transform 0.3s, color 0.3s, text-shadow 0.3s;
+  }
+  .footer-glass .footer-social a:hover {
+    color: #00bfff;
+    transform: translateY(-4px) scale(1.2);
+    text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+  }
+  
