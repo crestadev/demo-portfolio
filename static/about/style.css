@@ -1,56 +1,143 @@
-/* Hover effect for cards */
-.hover-shadow:hover {
-  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4) !important;
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
+/* Container max width and spacing */
+.container {
+  max-width: 1100px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
-/* Left border for section headings */
-.border-start {
-  border-left-width: 5px !important;
+/* Profile Image */
+.rounded-circle {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 4px solid #00bfff;
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.rounded-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 191, 255, 0.5);
 }
 
-/* Tagline styling */
+/* Header Text */
+h1.fw-bold {
+  font-size: 2.8rem;
+  color: #004080;
+  margin-bottom: 0.3rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+h4.text-primary {
+  font-size: 1.5rem;
+  color: #00bfff;
+  margin-bottom: 0.8rem;
+}
 .fst-italic {
   font-size: 1.1rem;
-  color: #007bff;
+  color: #0066cc;
+  font-style: italic;
 }
 
-/* Buttons hover */
-.btn-outline-primary:hover,
-.btn-outline-dark:hover,
+/* Contact Links */
+.btn-outline-primary,
+.btn-outline-dark,
+.btn-outline-success {
+  transition: all 0.3s ease;
+  border-width: 2px;
+}
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, #00bfff, #0066cc);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.4);
+  transform: scale(1.05);
+}
+.btn-outline-dark:hover {
+  background: #004080;
+  color: #fff;
+  transform: scale(1.05);
+}
 .btn-outline-success:hover {
-  opacity: 0.85;
+  background: #00cc66;
+  color: #fff;
+  transform: scale(1.05);
 }
 
-/* Cards inside Experience/Education */
+/* Section Headings */
+h2.text-primary {
+  position: relative;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #004080;
+  padding-left: 15px;
+  border-left: 6px solid #00bfff;
+}
+h2.text-primary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(135deg, #00bfff, #0066cc);
+  border-radius: 2px;
+}
+
+/* Cards for Experience & Education */
 .card {
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
 }
-
-/* Container spacing */
-.container {
-  max-width: 1000px;
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+  transform: translateY(-5px);
 }
 
-/* Ensure images are circular and nicely bordered */
-.rounded-circle {
-  object-fit: cover;
-  border: 3px solid #007bff;
-}
-
-
+/* Hover glow effect for Read More buttons */
 .read-more-btn {
-  background: none;
-  border: none;
-  color: #007bff;
-  padding: 0;
-  font-size: 0.95rem;
+  color: #00bfff;
   font-weight: 500;
-  cursor: pointer;
+  transition: all 0.3s ease;
 }
-
 .read-more-btn:hover {
   text-decoration: none;
-  opacity: 0.8;
+  text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+  transform: scale(1.05);
+}
+
+/* Progress bars (Skills) */
+.progress {
+  height: 15px;
+  background-color: #e6f2ff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.progress-bar {
+  background: linear-gradient(135deg, #00bfff, #0066cc);
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+  transition: width 1.5s ease-in-out;
+}
+
+/* Contact CTA Button */
+.btn-lg.btn-primary {
+  background: linear-gradient(135deg, #00bfff, #0066cc);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 35px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3);
+}
+.btn-lg.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 191, 255, 0.5);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  h1.fw-bold { font-size: 2rem; }
+  h4.text-primary { font-size: 1.2rem; }
+  .rounded-circle { width: 150px; height: 150px; }
+  .progress { height: 12px; }
 }
