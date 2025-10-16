@@ -1,8 +1,82 @@
-body { font-family: 'Inter', Arial, sans-serif; background:#f8f9fa; color:#222; scroll-behavior:smooth; }
-a { text-decoration:none; transition: all 0.3s; }
-a:hover { text-decoration:none; color:#007bff; }
-.navbar-brand { font-size:1.5rem; }
-.nav-link { font-weight:500; margin-left:1rem; }
-.nav-link:hover { color:#007bff; }
-.footer-social a { color:white; margin:0 8px; font-size:1.25rem; transition: transform 0.3s; }
-.footer-social a:hover { color:#007bff; transform: translateY(-3px); }
+/* GENERAL */
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background:#f8f9fa;
+    color:#222;
+    scroll-behavior:smooth;
+  }
+  
+  a {
+    text-decoration:none;
+    transition: all 0.3s ease;
+  }
+  a:hover { 
+    text-decoration:none; 
+    color:#007bff; 
+  }
+  
+  /* NAVBAR */
+  .navbar {
+    transition: all 0.3s ease;
+  }
+  .navbar-brand {
+    font-size:1.5rem;
+    transition: transform 0.3s ease;
+  }
+  .navbar-brand:hover { transform: scale(1.05); color:#00bfff; }
+  
+  .nav-link {
+    font-weight:500;
+    margin-left:1rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .nav-link::after {
+    content:'';
+    display:block;
+    height:2px;
+    width:0;
+    background:#00bfff;
+    transition:width 0.3s;
+    position:absolute;
+    bottom:0;
+    left:0;
+  }
+  .nav-link:hover::after { width:100%; }
+  .nav-link:hover { color:#00bfff; }
+  
+  /* FOOTER */
+  .footer-social a { 
+    color:white; 
+    margin:0 8px; 
+    font-size:1.25rem; 
+    transition: transform 0.3s, color 0.3s; 
+  }
+  .footer-social a:hover { 
+    color:#00bfff; 
+    transform: translateY(-4px) scale(1.1); 
+  }
+  
+  /* BUTTONS */
+  .btn {
+    transition: all 0.3s ease-in-out;
+  }
+  .btn:hover { transform: scale(1.05); }
+  
+  /* ADDITIONAL ANIMATION FOR LINKS */
+  .nav-link, .footer-social a, .btn {
+    cursor:pointer;
+  }
+  
+  /* RESPONSIVE NAVBAR PADDING */
+  @media (max-width: 768px) {
+    .navbar-brand { font-size:1.3rem; }
+    .nav-link { margin-left:0.5rem; }
+  }
+  
+  /* HIGHLIGHT EFFECT FOR ACTIVE NAV LINK */
+  .navbar-nav .nav-item .active {
+    color:#00bfff !important;
+    font-weight:600;
+  }
+  
