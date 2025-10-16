@@ -2,81 +2,170 @@
 {% load static %}
 {% block title %}Home | My Portfolio{% endblock %}
 
-{% block content %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'home/style.css' %}">
+{% endblock %}
 
-<!-- HERO SECTION -->
-<section class="hero-section text-center text-light d-flex align-items-center justify-content-center">
-  <div class="overlay"></div>
-  <div class="hero-content">
-    <h1 class="display-4 fw-bold">Hi, I'm {{ profile.full_name|default:"Your Name" }}</h1>
-    <h3 class="mb-3">{{ profile.title|default:"Full-Stack Developer" }}</h3>
-    <p class="lead mb-4">
-      {{ profile.bio|truncatechars:150|default:"I design and build clean, efficient, and scalable web applications using modern technologies." }}
-    </p>
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+  <div id="particles-js"></div>
+  <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
+    <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}" class="hero-photo">
+    <h1 class="hero-name">{{ profile.full_name }}</h1>
+    <h3 class="hero-tagline typewriter">{{ profile.tagline }}</h3>
+
     <div class="hero-buttons">
-      <a href="{% url 'core:about' %}" class="btn btn-primary btn-lg me-3">About Me</a>
-      <a href="{% url 'core:resume' %}" class="btn btn-outline-light btn-lg">View Resume</a>
+      <a href="{% url 'core:contact' %}" class="btn-primary">Contact Me</a>
+      <a href="{% url 'core:resume_pdf' %}" class="btn-secondary">Download Resume</a>
     </div>
+
+    <div class="hero-social">
+      {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>{% endif %}
+      {% if profile.github %}<a href="{{ profile.github }}" target="_blank"><i class="fab fa-github"></i></a>{% endif %}
+      {% if profile.website %}<a href="{{ profile.website }}" target="_blank"><i class="fas fa-globe"></i></a>{% endif %}
+    </div>
+  </div>
+
+  <!-- Hero Floating Shapes -->
+  <div class="floating-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
   </div>
 </section>
 
-<!-- SKILLS HIGHLIGHT -->
-<section class="py-5 text-center">
-  <div class="container">
-    <h2 class="mb-5 fw-bold">Core Skills</h2>
-    <div class="row justify-content-center">
-      {% for skill in profile.skills.all|slice:":6" %}
-      <div class="col-md-4 mb-4">
-        <div class="skill-card shadow-sm">
-          <h5>{{ skill.name }}</h5>
-          <div class="progress">
-            <div class="progress-bar" style="width: {{ skill.level }}%;">
-              {{ skill.level }}%
-            </div>
-          </div>
-        </div>
+<!-- Animated Wave Divider -->
+<svg class="wave-divider" viewBox="0 0 1440 150" preserveAspectRatio="none">
+  <path id="wave-path" fill="#90D5FF" fill-opacity="0.8" d="M0,64L1440,32L1440,150L0,150Z"></path>
+</svg>
+
+<!-- Skills Section -->
+<section class="skills-section" data-aos="fade-up">
+  <h2>My Skills</h2>
+  <div class="skills-container">
+    {% for skill in profile.skills.all %}
+    <div class="skill-card" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+      <h4>{{ skill.name }}</h4>
+      <div class="skill-bar">
+        <div class="skill-progress" style="width:0%;" data-progress="{{ skill.level }}"></div>
       </div>
-      {% empty %}
-      <p>No skills added yet. Add some via the admin panel.</p>
-      {% endfor %}
     </div>
+    {% endfor %}
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="py-5 bg-light" id="testimonials">
-  <div class="container text-center">
-    <h2 class="mb-5 fw-bold">What Clients Say</h2>
-    <div class="row justify-content-center">
-      {% for t in testimonials|slice:":3" %}
-      <div class="col-md-4 mb-4">
-        <div class="testimonial-card shadow-sm p-4 h-100">
-          {% if t.photo %}
-          <img src="{{ t.photo.url }}" class="rounded-circle mx-auto mb-3" width="80" height="80" alt="{{ t.client_name }}">
-          {% endif %}
-          <blockquote class="blockquote">
-            <p class="mb-3">“{{ t.content|truncatechars:120 }}”</p>
-          </blockquote>
-          <footer class="blockquote-footer">
-            {{ t.client_name }} <cite>{{ t.role }}</cite>
-          </footer>
-        </div>
+<!-- Projects Section -->
+<section class="projects-section" data-aos="fade-up">
+  <h2>Featured Projects</h2>
+  <div class="projects-grid">
+    {% for project in projects %}
+    <div class="project-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+      {% if project.featured_image %}
+      <div class="project-img-container">
+        <img src="{{ project.featured_image.url }}" alt="{{ project.title }}">
       </div>
-      {% empty %}
-      <p class="text-muted">No testimonials yet. Add some via the admin panel.</p>
-      {% endfor %}
+      {% endif %}
+      <div class="project-content">
+        <h4>{{ project.title }}</h4>
+        <p>{{ project.summary|truncatechars:120 }}</p>
+        <a href="{% url 'projects:project_detail' project.slug %}" class="btn-project">View Project</a>
+      </div>
     </div>
-    <a href="{% url 'core:testimonials' %}" class="btn btn-outline-primary mt-4">View All Testimonials</a>
+    {% endfor %}
   </div>
 </section>
 
-<!-- CTA -->
-<section class="contact-cta text-center py-5 text-light">
-  <div class="container">
-    <h2>Let’s work together!</h2>
-    <p class="lead mb-4">Looking for a developer to bring your ideas to life?</p>
-    <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Contact Me</a>
+<!-- Testimonials Section -->
+<section class="testimonials-section" data-aos="fade-up">
+  <h2>What Clients Say</h2>
+  <div class="testimonials-grid">
+    {% for testimonial in testimonials %}
+    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+      {% if testimonial.photo %}
+      <div class="testimonial-photo-container">
+        <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.client_name }}" class="testimonial-photo">
+      </div>
+      {% endif %}
+      <p class="testimonial-content">“{{ testimonial.content|truncatechars:180 }}”</p>
+      <h5 class="testimonial-name">{{ testimonial.client_name }}</h5>
+      {% if testimonial.role %}
+      <p class="testimonial-role">{{ testimonial.role }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
   </div>
-</section>
+
+<!-- View More Button -->
+<div class="btn-more-container">
+  <a href="{% url 'core:testimonials' %}" class="btn-more">View More Testimonials</a>
+</div>
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script>
+  // Initialize AOS
+  AOS.init({ duration: 1200, once: true });
+
+  // Particles.js Config
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 60 },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5 },
+      size: { value: 3 },
+      line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+      move: { enable: true, speed: 3 }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: { enable: true, mode: "repulse" },
+        onclick: { enable: true, mode: "push" }
+      }
+    }
+  });
+
+  // Typewriter Fix (preserves spaces)
+  const typewriter = document.querySelector('.typewriter');
+  if (typewriter) {
+    let txt = typewriter.innerText;
+    typewriter.innerText = '';
+    let i = 0;
+    const type = () => {
+      if (i < txt.length) {
+        typewriter.innerHTML += txt.charAt(i) === ' ' ? '&nbsp;' : txt.charAt(i);
+        i++;
+        setTimeout(type, 80);
+      }
+    };
+    type();
+  }
+
+  // Skill Bar Animations
+  document.querySelectorAll('.skill-progress').forEach(bar => {
+    let width = bar.getAttribute('data-progress');
+    setTimeout(() => { bar.style.width = width + '%'; }, 500);
+  });
+
+  // Animated Wave
+  const wave = document.getElementById('wave-path');
+  let waveOffset = 0;
+  function animateWave() {
+    waveOffset += 0.5;
+    wave.setAttribute('d', `M0,64 C360,${50 + 10 * Math.sin(waveOffset / 10)},1080,${64 + 10 * Math.cos(waveOffset / 10)},1440,32 L1440,150 L0,150 Z`);
+    requestAnimationFrame(animateWave);
+  }
+  animateWave();
+</script>
 {% endblock %}

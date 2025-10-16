@@ -1,50 +1,55 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Portfolio{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/style.css' %}">  
+{% load static %}
 
-    {% block extra_head %}{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Professional portfolio of {{ profile.full_name }}">
+  <title>{% block title %}My Portfolio{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'base/style.css' %}">
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <!-- Header / Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'core:home' %}">MyPortfolio</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'core:resume' %}">Resume</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'projects:project_list' %}">Projects</a></li>
 
-              <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">{{ profile.full_name }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'projects:project_list' %}">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <!-- Main Content -->
-    <main class="container my-5">
-        {% block content %}{% endblock %}
-    </main>
+<!-- Main Content -->
+<main class="mt-5 pt-5">
+  {% block content %}{% endblock %}
+</main>
 
-    <!-- Footer -->
-    <footer class="bg-light py-3 mt-auto">
-        <div class="container text-center">
-            <p class="mb-0">&copy; {{ year|default:"2025" }} MyPortfolio. All rights reserved.</p>
-        </div>
-    </footer>
+<!-- Footer -->
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <p>&copy; {{ profile.full_name }} | All Rights Reserved</p>
+    <div class="footer-social mt-2">
+      {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>{% endif %}
+      {% if profile.github %}<a href="{{ profile.github }}" target="_blank"><i class="fab fa-github"></i></a>{% endif %}
+      {% if profile.website %}<a href="{{ profile.website }}" target="_blank"><i class="fas fa-globe"></i></a>{% endif %}
+    </div>
+  </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    {% block extra_js %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>

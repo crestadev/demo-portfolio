@@ -8,14 +8,22 @@ from django.conf import settings
 from weasyprint import HTML
 import os
 
+from projects.models import Project
+
 from .forms import ContactForm
 from .models import Profile, Testimonial
 
 
-
-
 def home(request):
-    return render(request, 'core/home.html')
+    profile = Profile.objects.first()
+    projects = Project.objects.all()[:6]  # Show top 6 projects
+    testimonials = Testimonial.objects.all()[:4]  # Show top 4 testimonials
+    context = {
+        'profile': profile,
+        'projects': projects,
+        'testimonials': testimonials,
+    }
+    return render(request, 'core/home.html', context)
 
 def about(request):
     profile = Profile.objects.first()
@@ -77,10 +85,3 @@ def testimonials(request):
     return render(request, 'core/testimonials.html', {'testimonials': testimonials})
 
 
-def home(request):
-    profile = Profile.objects.first()
-    testimonials = Testimonial.objects.all()[:3] 
-    return render(request, 'core/home.html', {
-        'profile': profile,
-        'testimonials': testimonials,
-    })

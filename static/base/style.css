@@ -1,0 +1,8 @@
+body { font-family: 'Inter', Arial, sans-serif; background:#f8f9fa; color:#222; scroll-behavior:smooth; }
+a { text-decoration:none; transition: all 0.3s; }
+a:hover { text-decoration:none; color:#007bff; }
+.navbar-brand { font-size:1.5rem; }
+.nav-link { font-weight:500; margin-left:1rem; }
+.nav-link:hover { color:#007bff; }
+.footer-social a { color:white; margin:0 8px; font-size:1.25rem; transition: transform 0.3s; }
+.footer-social a:hover { color:#007bff; transform: translateY(-3px); }
