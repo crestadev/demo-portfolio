@@ -1,22 +1,73 @@
 {% extends 'base.html' %}
-
-{% load static %}  
+{% load static %}
 
 {% block title %}{{ post.title }} | Blog{% endblock %}
 
-{% block extra_css %}
+{% block extra_head %}
 <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+<style>
+  .blog-detail-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .blog-detail-container h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-meta {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .markdown-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .markdown-body img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+  }
+
+  .btn-back {
+    margin-top: 2.5rem;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-back:hover {
+    background-color: #007bff;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5" style="max-width: 800px;">
+<div class="container blog-detail-container">
   <h1>{{ post.title }}</h1>
-  <p class="text-muted">{{ post.created_at|date:"M d, Y" }}</p>
+  <p class="blog-meta">By {{ post.author }} • {{ post.created_at|date:"F d, Y" }}</p>
 
   <div class="markdown-body">
     {{ post.content_html|safe }}
   </div>
 
-  <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-secondary mt-4">← Back to Blog</a>
+  <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary btn-back">← Back to Blog</a>
 </div>
 {% endblock %}
