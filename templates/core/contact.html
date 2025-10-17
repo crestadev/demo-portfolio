@@ -5,35 +5,44 @@
 {% block title %}Contact | My Portfolio{% endblock %}
 
 {% block content %}
-<div class="contact-container">
-  <h1 class="text-center mb-4">Contact Me</h1>
+<section class="contact-section">
+  <div class="floating-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+  </div>
 
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
-        {{ message }}
+  <div class="contact-container">
+    <h1 class="text-center mb-4">Contact Me</h1>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="contact-form">
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="form-group mb-3">
+          {{ field.label_tag }}
+          {{ field|add_class:"form-control" }}
+          {% for error in field.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
       </div>
-    {% endfor %}
-  {% endif %}
+    </form>
+  </div>
+</section>
 
-  <form method="POST" class="contact-form">
-    {% csrf_token %}
-
-    {% for field in form %}
-      <div class="form-group mb-3">
-        {{ field.label_tag }}
-        {{ field|add_class:"form-control" }}
-        {% for error in field.errors %}
-          <div class="text-danger small">{{ error }}</div>
-        {% endfor %}
-      </div>
-    {% endfor %}
-
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-    </div>
-  </form>
-</div>
 
 <link rel="stylesheet" href="{% static 'contact/style.css' %}">
 {% endblock %}
