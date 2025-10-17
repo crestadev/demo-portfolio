@@ -115,8 +115,12 @@
 
 <script>
   // Initialize AOS
-  AOS.init({ duration: 1200, once: true });
-
+  AOS.init({
+    duration: 700,     
+    easing: 'ease-out', // smoother movement
+    once: true,         // animate only once
+    offset: 100         // start animation slightly before scrolling
+  });
   // Particles.js Config
   particlesJS("particles-js", {
     particles: {
