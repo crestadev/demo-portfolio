@@ -62,7 +62,7 @@
 <section class="projects-section" data-aos="fade-up">
   <h2>Featured Projects</h2>
   <div class="projects-grid">
-    {% for project in projects %}
+    {% for project in projects|slice:":3" %}
     <div class="project-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
       {% if project.image %}
       <div class="project-img-container">
@@ -84,7 +84,7 @@
 <section class="testimonials-section" data-aos="fade-up">
   <h2>What Clients Say</h2>
   <div class="testimonials-grid">
-    {% for testimonial in testimonials %}
+    {% for testimonial in testimonials|slice:":3" %}
     <div class="testimonial-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
       {% if testimonial.photo %}
       <div class="testimonial-photo-container">
