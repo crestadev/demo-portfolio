@@ -26,7 +26,7 @@
           {% endif %}
           <div class="blog-content">
             <h4 class="blog-title">{{ post.title }}</h4>
-            <p class="blog-meta text-muted small">By {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
+            <p class="blog-meta text-muted small">{{ post.created_at|date:"M d, Y" }}</p>
             <p class="blog-summary">{{ post.summary|truncatechars:150 }}</p>
             <a href="{% url 'blog:blog_detail' post.slug %}" class="btn-read">Read More</a>
           </div>

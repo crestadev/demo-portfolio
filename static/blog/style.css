@@ -94,6 +94,12 @@
 .blog-meta {
   color: #6c757d;
   font-size: 0.95rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+.blog-metad {
+  color: #6c757d;
+  font-size: 0.95rem;
   text-align: center;
   margin-bottom: 2rem;
 }

@@ -11,7 +11,7 @@
 <section class="blog-detail-section">
   <div class="container blog-detail-container" data-aos="fade-up">
     <h1 class="blog-detail-title">{{ post.title }}</h1>
-    <p class="blog-meta">By {{ post.author }} • {{ post.created_at|date:"F d, Y" }}</p>
+    <p class="blog-metad">{{ post.created_at|date:"F d, Y" }}</p>
 
     {% if post.cover_image %}
     <div class="blog-detail-img" data-aos="zoom-in">
