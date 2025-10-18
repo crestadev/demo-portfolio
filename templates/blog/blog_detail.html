@@ -1,22 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}{{ post.title }} | Blog{% endblock %}
 
 {% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
 <link rel="stylesheet" href="{% static 'blog/style.css' %}">
-
 {% endblock %}
 
 {% block content %}
-<div class="container blog-detail-container">
-  <h1>{{ post.title }}</h1>
-  <p class="blog-meta"> {{ post.created_at|date:"F d, Y" }}</p>
+<section class="blog-detail-section">
+  <div class="container blog-detail-container" data-aos="fade-up">
+    <h1 class="blog-detail-title">{{ post.title }}</h1>
+    <p class="blog-meta">By {{ post.author }} • {{ post.created_at|date:"F d, Y" }}</p>
 
-  <div class="markdown-body">
-    {{ post.content_html|safe }}
+    {% if post.cover_image %}
+    <div class="blog-detail-img" data-aos="zoom-in">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+
+    <div class="markdown-body mt-4">
+      {{ post.content_html|safe }}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{% url 'blog:blog_list' %}" class="btn-back">← Back to Blog</a>
+    </div>
   </div>
+</section>
+{% endblock %}
 
-  <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary btn-back">← Back to Blog</a>
-</div>
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
+</script>
 {% endblock %}

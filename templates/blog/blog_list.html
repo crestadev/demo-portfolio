@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Blog | {{ profile.full_name }}{% endblock %}
 
 {% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
 <link rel="stylesheet" href="{% static 'blog/style.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="blog-page">
-  <div class="container">
-    <div class="blog-header" data-aos="fade-down">
-      <h1 class="fw-bold mb-3">Latest Blog Posts</h1>
-      <p class="text-muted">Insights, tutorials, and thoughts on technology and creativity.</p>
+<section class="blog-section">
+  <div class="container py-5">
+    <div class="text-center mb-5" data-aos="fade-down">
+      <h1 class="fw-bold text-gradient">Latest Blog Posts</h1>
+      <p class="text-muted fs-5">Thoughts, tutorials, and insights from my tech journey.</p>
     </div>
 
     <div class="row g-4">
       {% for post in posts %}
       <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0|add:100 }}">
-        <div class="blog-card h-100">
+        <div class="blog-card">
           {% if post.cover_image %}
           <div class="blog-img">
             <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
           </div>
           {% endif %}
           <div class="blog-content">
-            <h5 class="blog-title">{{ post.title }}</h5>
-            <p class="blog-meta">{{ post.created_at|date:"M d, Y" }}</p>
+            <h4 class="blog-title">{{ post.title }}</h4>
+            <p class="blog-meta text-muted small">By {{ post.author }} • {{ post.created_at|date:"M d, Y" }}</p>
             <p class="blog-summary">{{ post.summary|truncatechars:150 }}</p>
-            <a href="{% url 'blog:blog_detail' post.slug %}" class="btn-read">Read More →</a>
+            <a href="{% url 'blog:blog_detail' post.slug %}" class="btn-read">Read More</a>
           </div>
         </div>
       </div>
@@ -37,5 +37,12 @@
       {% endfor %}
     </div>
   </div>
-</div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
+</script>
 {% endblock %}

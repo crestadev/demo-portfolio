@@ -4,55 +4,53 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'about/style.css' %}">
+
 {% endblock %}
 
 {% block content %}
-
-<div class="container my-5">
+<div class="container py-5" style="max-width: 900px;">
 
   <!-- Header -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-4 text-center">
-      {% if profile.photo %}
-        <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}" class="rounded-circle img-fluid border border-primary" style="max-width: 200px;">
-      {% else %}
-        <img src="{% static 'images/default_profile.png' %}" alt="{{ profile.full_name }}" class="rounded-circle img-fluid border border-primary" style="max-width: 200px;">
-      {% endif %}
-    </div>
-    <div class="col-md-8">
-      <h1 class="fw-bold">{{ profile.full_name }}</h1>
-      <h4 class="text-primary">{{ profile.title }}</h4>
-      {% if profile.tagline %}
-        <p class="fst-italic">{{ profile.tagline }}</p>
-      {% endif %}
-      <p>
-        {% if profile.phone %}<i class="bi bi-telephone-fill"></i> {{ profile.phone }} |{% endif %}
-        {% if profile.email %}<i class="bi bi-envelope-fill"></i> {{ profile.email }}{% endif %}
-      </p>
-      <p>{% if profile.location %}<i class="bi bi-geo-alt-fill"></i> {{ profile.location }}{% endif %}</p>
-      <div class="mt-2">
-        {% if profile.linkedin %}<a href="{{ profile.linkedin }}" class="btn btn-outline-primary btn-sm me-2" target="_blank">LinkedIn</a>{% endif %}
-        {% if profile.github %}<a href="{{ profile.github }}" class="btn btn-outline-dark btn-sm me-2" target="_blank">GitHub</a>{% endif %}
-        {% if profile.website %}<a href="{{ profile.website }}" class="btn btn-outline-success btn-sm" target="_blank">Website</a>{% endif %}
-      </div>
+  <div class="about-header" data-aos="fade-up">
+    {% if profile.photo %}
+      <img src="{{ profile.photo.url }}" alt="{{ profile.full_name }}">
+    {% else %}
+      <img src="{% static 'images/default_profile.png' %}" alt="{{ profile.full_name }}">
+    {% endif %}
+    <h1>{{ profile.full_name }}</h1>
+    <h4>{{ profile.title }}</h4>
+    {% if profile.tagline %}
+      <p class="fst-italic">{{ profile.tagline }}</p>
+    {% endif %}
+    <p>
+      {% if profile.phone %}<i class="bi bi-telephone-fill"></i> {{ profile.phone }} | {% endif %}
+      {% if profile.email %}<i class="bi bi-envelope-fill"></i> {{ profile.email }}{% endif %}
+    </p>
+    {% if profile.location %}
+      <p><i class="bi bi-geo-alt-fill"></i> {{ profile.location }}</p>
+    {% endif %}
+    <div class="mt-3">
+      {% if profile.linkedin %}<a href="{{ profile.linkedin }}" class="btn btn-outline-primary btn-sm me-2" target="_blank">LinkedIn</a>{% endif %}
+      {% if profile.github %}<a href="{{ profile.github }}" class="btn btn-outline-dark btn-sm me-2" target="_blank">GitHub</a>{% endif %}
+      {% if profile.website %}<a href="{{ profile.website }}" class="btn btn-outline-success btn-sm" target="_blank">Website</a>{% endif %}
     </div>
   </div>
 
   <!-- About Me -->
-  <section class="mb-5">
-    <h2 class="text-primary mb-3 border-start border-3 ps-2">About Me</h2>
+  <section class="about-section" data-aos="fade-up">
+    <h2>About Me</h2>
     <p>{{ profile.bio|linebreaks }}</p>
   </section>
 
   <!-- Skills -->
-  <section class="mb-5">
-    <h2 class="text-primary mb-3 border-start border-3 ps-2">Skills</h2>
+  <section class="about-section" data-aos="fade-up">
+    <h2>Skills</h2>
     <div class="row">
       {% for skill in profile.skills.all %}
         <div class="col-md-6 mb-3">
           <h6 class="mb-1">{{ skill.name }} <span class="float-end">{{ skill.level }}%</span></h6>
           <div class="progress">
-            <div class="progress-bar bg-primary" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-primary" style="width: {{ skill.level }}%;"></div>
           </div>
         </div>
       {% empty %}
@@ -62,20 +60,19 @@
   </section>
 
   <!-- Experience -->
-  <section class="mb-5">
-    <h2 class="text-primary mb-3 border-start border-3 ps-2">Experience</h2>
+  <section class="about-section" data-aos="fade-up">
+    <h2>Experience</h2>
     <div class="row">
       {% for exp in profile.experiences.all %}
-        <div class="col-md-6 mb-3">
-          <div class="card shadow-sm h-100 hover-shadow">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ exp.position }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ exp.company }} • {{ exp.start_year }} - {{ exp.end_year|default:"Present" }}</h6>
-              <p>{{ exp.description|truncatechars:150 }}</p>
+              <h6 class="text-muted">{{ exp.company }} • {{ exp.start_year }} - {{ exp.end_year|default:"Present" }}</h6>
+              <p>{{ exp.description|truncatechars:120 }}</p>
               <button type="button" class="read-more-btn" data-bs-toggle="modal" data-bs-target="#expModal{{ exp.id }}">
                 Read more
               </button>
-              
             </div>
           </div>
         </div>
@@ -85,8 +82,8 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="expModalLabel{{ exp.id }}">{{ exp.position }} at {{ exp.company }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">{{ exp.position }} at {{ exp.company }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
                 {{ exp.description|linebreaks }}
@@ -94,57 +91,53 @@
             </div>
           </div>
         </div>
-
       {% empty %}
-        <p>No experiences yet.</p>
+        <p>No experiences added yet.</p>
       {% endfor %}
     </div>
   </section>
 
-<!-- Education -->
-<section class="mb-5">
-  <h2 class="text-primary mb-3 border-start border-3 ps-2">Education</h2>
-  <div class="row">
-    {% for edu in profile.education.all %}
-      <div class="col-md-6 mb-3">
-        <div class="card shadow-sm h-100 hover-shadow">
-          <div class="card-body">
-            <h5 class="card-title">{{ edu.degree }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ edu.institution }} • {{ edu.year }}</h6>
-            <p>{{ edu.description|truncatechars:150 }}</p>
-            <button type="button" class="read-more-btn" data-bs-toggle="modal" data-bs-target="#eduModal{{ edu.id }}">
-              Read more
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal for this education -->
-      <div class="modal fade" id="eduModal{{ edu.id }}" tabindex="-1" aria-labelledby="eduModalLabel{{ edu.id }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="eduModalLabel{{ edu.id }}">{{ edu.degree }} at {{ edu.institution }}</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              {{ edu.description|linebreaks }}
+  <!-- Education -->
+  <section class="about-section" data-aos="fade-up">
+    <h2>Education</h2>
+    <div class="row">
+      {% for edu in profile.education.all %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ edu.degree }}</h5>
+              <h6 class="text-muted">{{ edu.institution }} • {{ edu.year }}</h6>
+              <p>{{ edu.description|truncatechars:120 }}</p>
+              <button type="button" class="read-more-btn" data-bs-toggle="modal" data-bs-target="#eduModal{{ edu.id }}">
+                Read more
+              </button>
             </div>
           </div>
         </div>
-      </div>
 
-    {% empty %}
-      <p>No education records yet.</p>
-    {% endfor %}
-  </div>
-</section>
-
+        <!-- Modal -->
+        <div class="modal fade" id="eduModal{{ edu.id }}" tabindex="-1" aria-labelledby="eduModalLabel{{ edu.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ edu.degree }} at {{ edu.institution }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                {{ edu.description|linebreaks }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No education records added yet.</p>
+      {% endfor %}
+    </div>
+  </section>
 
   <!-- Contact CTA -->
-  <div class="text-center mb-5">
-    <a href="{% url 'core:contact' %}" class="btn btn-lg btn-primary">Contact Me</a>
+  <div class="text-center">
+    <a href="{% url 'core:contact' %}" class="btn btn-lg btn-primary rounded-pill px-4 py-2">Contact Me</a>
   </div>
-
 </div>
 {% endblock %}
