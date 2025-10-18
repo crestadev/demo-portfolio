@@ -2,8 +2,11 @@
 {% load static %}
 {% block title %}About | {{ profile.full_name }}{% endblock %}
 
-{% block content %}
+{% block extra_head %}
 <link rel="stylesheet" href="{% static 'about/style.css' %}">
+{% endblock %}
+
+{% block content %}
 
 <div class="container my-5">
 
